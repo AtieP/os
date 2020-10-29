@@ -1,0 +1,7 @@
+*.elf
+*.EFI
+*.bin
+*.o
+*.img
+*.bmp
+limine-install
