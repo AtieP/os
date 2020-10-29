@@ -23,7 +23,8 @@ build:
 	$(CC) $(CFLAGS) -c src/sys/idt.c -o src/sys/idt.o
 	$(CC) $(CFLAGS) -c src/sys/isr.c -o src/sys/isr.o
 	$(CC) $(CFLAGS) -c src/devices/video/vbe.c -o src/devices/video/vbe.o
-	$(LD) src/kernel.o src/boot.o src/sys/isr.o src/sys/isr.asm.o src/devices/video/vga.o src/devices/video/vbe.o src/sys/idt.o $(LDFLAGS) -o kernel.elf
+	$(CC) $(CFLAGS) -c src/sys/pic.c -o src/sys/pic.o
+	$(LD) src/kernel.o src/boot.o src/sys/pic.o src/sys/isr.o src/sys/isr.asm.o src/devices/video/vga.o src/devices/video/vbe.o src/sys/idt.o $(LDFLAGS) -o kernel.elf
 
 	dd if=/dev/zero bs=1M count=0 seek=64 of=os.img
 	parted -s os.img mklabel msdos

@@ -4,6 +4,7 @@
 #include <inc/misc/font.h>
 #include <inc/sys/idt.h>
 #include <inc/sys/isr.h>
+#include <inc/sys/pic.h>
 #include <inc/sys/ports.h>
 
 void kmain(struct stivale_struct *bootloader_info) {
@@ -24,6 +25,7 @@ void kmain(struct stivale_struct *bootloader_info) {
 		font_height
 	);
 	OsDriver_Video_VBE_Puts("Hello", 0xFFFFF);
+	OsSys_PIC_Init();
 	OsSys_ISR_Init();
 	OsSys_IDT_Init();
 	asm volatile("sti");

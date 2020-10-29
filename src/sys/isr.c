@@ -21,19 +21,18 @@ void OsSys_ISR_Exception(void) {
 }
 
 void OsSys_ISR_Init(void) {
-    for (int i = 0; i < 32; i++) {
+    for (int i = 0; i < 0x21; i++) {
         OsSys_IDT_Set_Gate(i, (uint64_t) isr_exception);
     }
-
-    OsSys_IDT_Set_Gate(31, (uint64_t) isr_irq_master);
-    OsSys_IDT_Set_Gate(32, (uint64_t) isr_keyb);
-    for (int i = 33; i < 33 + 6; i++) {
+    OsSys_IDT_Set_Gate(0x20, (uint64_t) isr_irq_master);
+    OsSys_IDT_Set_Gate(0x21, (uint64_t) isr_keyb);
+    for (int i = 0x22; i < 0x28; i++) {
         OsSys_IDT_Set_Gate(i, (uint64_t) isr_irq_master);
     }
-    for (int i = 39; i < 15 + 32 + 1; i++) {
+    for (int i = 0x28; i < 0x2F; i++) {
         OsSys_IDT_Set_Gate(i, (uint64_t) isr_irq_slave);
     }
-    for (int i = 15 + 32; i < 256; i++) {
+    for (int i = 0x30; i < 256; i++) {
         OsSys_IDT_Set_Gate(i, (uint64_t) isr_stub);
     }
 }
