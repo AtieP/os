@@ -41,7 +41,7 @@ void OsSys_PIC_Init(void) {
 	OsSys_Ports_Outb(PIC_SLAVE_DATA, 0x01);
 	io_wait();
 
-	// Restore masks
-	OsSys_Ports_Outb(PIC_MASTER_DATA, 0xFD);
+	// Set some masks ;)
+	OsSys_Ports_Outb(PIC_MASTER_DATA, 0xFC);
 	OsSys_Ports_Outb(PIC_SLAVE_DATA, 0xFF);
 }
