@@ -24,11 +24,13 @@ void kmain(struct stivale_struct *bootloader_info) {
 		font_width,
 		font_height
 	);
-	OsDriver_Video_VBE_Puts("Hello", 0xFFFFF);
+	OsDriver_Video_VBE_Puts("[INFO] Initializing PIC...\n", 0xFFFFFF);
 	OsSys_PIC_Init();
+	OsDriver_Video_VBE_Puts("[INFO] Initializing ISRs...\n", 0xFFFFFF);
 	OsSys_ISR_Init();
+	OsDriver_Video_VBE_Puts("[INFO] Initializing IDT...\n", 0xFFFFFF);
 	OsSys_IDT_Init();
+	OsDriver_Video_VBE_Puts("Done!", 0x008000);
 	asm volatile("sti");
-	OsDriver_Video_VBE_Puts("\nI SURVIVED LMAOOO", 0xFFFFF);
 	while (1) {}
 }
