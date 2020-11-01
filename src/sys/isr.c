@@ -11,19 +11,29 @@ extern void isr_exception(void);
 extern void isr_irq_master(void);
 extern void isr_irq_slave(void);
 
+static const uint8_t ascii_nomod[] = {
+    '\0', '\e', '1', '2', '3', '4', '5', '6', '7', '8', '9', '0', '-', '=', '\b', '\t',
+    'q', 'w', 'e', 'r', 't', 'y', 'u', 'i', 'o', 'p', '[', ']', '\n', '\0', 'a', 's',
+    'd', 'f', 'g', 'h', 'j', 'k', 'l', ';', '\'', '`', '\0', '\\', 'z', 'x', 'c', 'v',
+    'b', 'n', 'm', ',', '.', '/', '\0', '\0', '\0', ' '
+};
+
 void OsSys_ISR_Stub(void) {
     OsDriver_Video_VBE_Puts("\n[ISR] Stub", 0xE5E5E5);
 }
 
 void OsSys_ISR_Timer(void) {
-    OsDriver_Video_VBE_Puts("\n[ISR] Timer triggered", 0x7289DA);
     OsSys_PIC_Master_EOI();
 }
 
 void OsSys_ISR_Keyboard(void) {
-    char key = OsSys_Ports_Inb(0x60);
-    (void) key;
-    OsDriver_Video_VBE_Puts("\n[ISR] Key received! ", 0x07DA63);
+    uint8_t key = OsSys_Ports_Inb(0x60);
+    if (key > 0x57) {
+        OsSys_PIC_Master_EOI();
+        return;
+    }
+    OsDriver_Video_VBE_Puts("\n[ISR] Key received: ", 0x07DA63);
+    OsDriver_Video_VBE_Putc(ascii_nomod[key], 0x07DA63);
     OsSys_PIC_Master_EOI();
 }
 
