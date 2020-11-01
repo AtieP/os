@@ -12,6 +12,7 @@ extern OsSys_ISR_Exception
 
 isr_stub:
 	call OsSys_ISR_Stub
+	iretq
 
 isr_timer:
     call OsSys_ISR_Timer
