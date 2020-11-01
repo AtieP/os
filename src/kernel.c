@@ -24,6 +24,9 @@ void kmain(struct stivale_struct *bootloader_info) {
 		font_width,
 		font_height
 	);
+	OsDriver_Video_VBE_Puts("[INFO] Command line input: ", 0xFFFFFF);
+	OsDriver_Video_VBE_Puts((char *) bootloader_info->cmdline, 0xFFFFFF);
+	OsDriver_Video_VBE_Putc('\n', 0xFFFFFF);
 	OsDriver_Video_VBE_Puts("[INFO] Initializing PIC...\n", 0xFFFFFF);
 	OsSys_PIC_Init();
 	OsDriver_Video_VBE_Puts("[INFO] Initializing ISRs...\n", 0xFFFFFF);
