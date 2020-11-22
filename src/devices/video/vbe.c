@@ -35,10 +35,10 @@ void OsDriver_Video_VBE_Putc(const char ch, uint32_t color) {
 		vbe_cursor_x = 0;
 		vbe_cursor_y++;
 	} else {
-		uint8_t *a = framebuffer.font_address + (uint16_t) ch * ((framebuffer.font_width / 8) * framebuffer.font_height);
+		uint8_t *char_bitmap = framebuffer.font_address + (uint16_t) ch * ((framebuffer.font_width / 8) * framebuffer.font_height);
 		for (int i = 0; i < framebuffer.font_height; i++) {
 			for (int j = 0, bit = framebuffer.font_width; j < framebuffer.font_width; j++) {
-				if (a[i] & (1 << --bit)) {
+				if (char_bitmap[i] & (1 << --bit)) { // If bit is 0, don't print it
 					framebuffer.address[(i + (vbe_cursor_y * framebuffer.font_height)) * framebuffer.pitch + j + (vbe_cursor_x * framebuffer.font_width)] = color;
 				}
 			}
