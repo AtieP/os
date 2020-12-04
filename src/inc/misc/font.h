@@ -1,4 +1,7 @@
 #pragma once
+
+/* This file is in the public domain, so yoink it freely :-) */
+
 unsigned char font_height = 16;
 unsigned char font_width  = 8;
 
